@@ -18,10 +18,13 @@ public class Veiculo {
     private String modelo;
     @Column(name = "veiculo_ano")
     private String ano;
+    @Column(name = "veiculo_cor")
+    private String cor;
 
     public Veiculo(DadosCadastroVeiculo dados) {
         this.marca = dados.marca();
         this.modelo = dados.modelo();
         this.ano = dados.ano();
+        this.cor = dados.cor();
     }
 }
