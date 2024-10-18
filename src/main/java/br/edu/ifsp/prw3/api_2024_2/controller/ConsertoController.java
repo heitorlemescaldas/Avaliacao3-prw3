@@ -24,13 +24,11 @@ public class ConsertoController {
     @Autowired
     private ConsertoRepository repository;
 
-    // Método para retornar todos os dados com paginação
     @GetMapping
     public ResponseEntity<Page<DadosCadastroConserto>> listarConsertos(Pageable pageable) {
         return ResponseEntity.ok(repository.findAll(pageable).map(this::toDadosCadastroConserto));
     }
 
-    // Método para retornar apenas datas, nome do mecânico, marca e modelo (sem paginação)
     @GetMapping("/resumo")
     public ResponseEntity<List<DadosResumoConserto>> listarResumoConsertos() {
         List<DadosResumoConserto> resumos = repository.findAll().stream()
@@ -39,7 +37,6 @@ public class ConsertoController {
         return ResponseEntity.ok(resumos);
     }
 
-    // Método para converter um Conserto completo para um DTO de resumo
     private DadosResumoConserto toDadosResumoConserto(Conserto conserto) {
         return new DadosResumoConserto(
                 conserto.getDataEntrada(),
