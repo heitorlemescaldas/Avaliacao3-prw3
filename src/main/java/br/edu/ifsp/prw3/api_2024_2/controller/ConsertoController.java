@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,6 +30,15 @@ public class ConsertoController {
         return ResponseEntity.ok(repository.findAll(pageable).map(this::toDadosCadastroConserto));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getConserto(@PathVariable Long id) {
+        Optional<Conserto> conserto = repository.findById(id);
+        if (conserto.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(conserto.get());
+    }
+
     @GetMapping("/resumo")
     public ResponseEntity<List<DadosResumoConserto>> listarResumoConsertos() {
         List<DadosResumoConserto> resumos = repository.findAll().stream()
@@ -39,6 +49,7 @@ public class ConsertoController {
 
     private DadosResumoConserto toDadosResumoConserto(Conserto conserto) {
         return new DadosResumoConserto(
+                conserto.getId(),
                 conserto.getDataEntrada(),
                 conserto.getDataSaida(),
                 conserto.getMecanico().getNome(),

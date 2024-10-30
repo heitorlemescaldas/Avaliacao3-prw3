@@ -21,6 +21,7 @@ public class Conserto {
 
     private String dataEntrada;
     private String dataSaida;
+    private int ativo;
 
     @Embedded
     private Mecanico mecanico;
