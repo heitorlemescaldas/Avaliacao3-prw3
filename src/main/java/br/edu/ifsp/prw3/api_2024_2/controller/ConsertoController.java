@@ -80,7 +80,7 @@ public class ConsertoController {
     public ResponseEntity<Void> excluirConserto(@PathVariable Long id) {
         Conserto conserto = repository.findById(id).orElseThrow(() -> new RuntimeException("Conserto não encontrado"));
         conserto.setAtivo(false);
-        repository.save(conserto);
+        repository.delete(conserto);
         return ResponseEntity.noContent().build();
     }
 
