@@ -21,7 +21,7 @@ public class Conserto {
 
     private String dataEntrada;
     private String dataSaida;
-    private int ativo;
+    private boolean ativo;
 
     @Embedded
     private Mecanico mecanico;
@@ -34,5 +34,13 @@ public class Conserto {
         this.dataSaida = dados.dataSaida();
         this.mecanico = new Mecanico(dados.mecanico());
         this.veiculo = new Veiculo(dados.veiculo());
+    }
+
+    public void setDataSaida(String dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

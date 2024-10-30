@@ -1,10 +1,7 @@
 package br.edu.ifsp.prw3.api_2024_2.controller;
 
 import br.edu.ifsp.prw3.api_2024_2.ConsertoRepository;
-import br.edu.ifsp.prw3.api_2024_2.DTOs.DadosCadastroConserto;
-import br.edu.ifsp.prw3.api_2024_2.DTOs.DadosCadastroMecanico;
-import br.edu.ifsp.prw3.api_2024_2.DTOs.DadosCadastroVeiculo;
-import br.edu.ifsp.prw3.api_2024_2.DTOs.DadosResumoConserto;
+import br.edu.ifsp.prw3.api_2024_2.DTOs.*;
 import br.edu.ifsp.prw3.api_2024_2.models.Conserto;
 import br.edu.ifsp.prw3.api_2024_2.models.Mecanico;
 import br.edu.ifsp.prw3.api_2024_2.models.Veiculo;
@@ -57,6 +54,36 @@ public class ConsertoController {
                 conserto.getVeiculo().getModelo()
         );
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Conserto> atualizarConserto(
+            @PathVariable Long id,
+            @RequestBody DadosAtualizacaoConserto dados) {
+
+        Conserto conserto = repository.findById(id).orElseThrow(() -> new RuntimeException("Conserto não encontrado"));
+
+        if (dados.dataSaida() != null) {
+            conserto.setDataSaida(dados.dataSaida());
+        }
+        if (dados.mecanicoNome() != null) {
+            conserto.getMecanico().setNome(dados.mecanicoNome());
+        }
+        if (dados.mecanicoAnosExperiencia() != null) {
+            conserto.getMecanico().setAnosExperiencia(dados.mecanicoAnosExperiencia());
+        }
+
+        repository.save(conserto);
+        return ResponseEntity.ok(conserto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirConserto(@PathVariable Long id) {
+        Conserto conserto = repository.findById(id).orElseThrow(() -> new RuntimeException("Conserto não encontrado"));
+        conserto.setAtivo(false);
+        repository.save(conserto);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PostMapping
     public ResponseEntity<Conserto> cadastrarConserto(@RequestBody DadosCadastroConserto dados) {
