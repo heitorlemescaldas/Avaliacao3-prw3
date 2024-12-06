@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class AutenticacaoController {
     @Autowired
-    private AuthenticationManager manager; // Objeto AuthenticationManager, que será injetado aqui:
+    private AuthenticationManager manager;
+
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid dadosAutenticacao dados) {
 
-        var token = new UsernamePasswordAuthenticationToken( dados.login(), dados.senha() );
+        var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(authentication);
 
     }
 }
