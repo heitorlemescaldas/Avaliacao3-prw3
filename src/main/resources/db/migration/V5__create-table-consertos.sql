@@ -1,0 +1,1 @@
+insert into usuarios (login, senha) values ('admin@gmail.com', '123456');
