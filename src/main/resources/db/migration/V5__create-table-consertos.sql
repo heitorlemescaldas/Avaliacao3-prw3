@@ -1,0 +1,1 @@
+insert into usuarios (login, senha) values ('admin@gmail.com', '$2a$12$/fVzf9LvVhUg4JMAeoKQm.Vl9Ed/BhbVh.phpMyxS9.hO1dKeQ176');
